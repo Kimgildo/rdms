@@ -1,0 +1,32 @@
+<launch>
+    <!-- setup 3d camera -->
+    <!-- Right -->
+    <include file="$(find realsense2_camera)/launch/rs_d435_camera_with_model.launch">
+        <!-- <arg name="node_name"           value="right_realsense2_camera"/> -->
+        <arg name="serial_no"           value="109122072085"/> 
+        <arg name="camera"              value="right_camera"/>
+
+        <!-- <arg name="depth_width"             default="848"/>
+        <arg name="depth_height"            default="480"/>
+        <arg name="infra_width"             default="848"/>  
+        <arg name="infra_height"            default="480"/>
+        <arg name="color_width"             default="848"/>
+        <arg name="color_height"            default="480"/>
+
+        <arg name="infra_fps"               default="30"/>
+        <arg name="color_fps"               default="30"/>
+        <arg name="depth_fps"               default="30"/>
+
+        <arg name="enable_color"            default="true"/>
+        <arg name="enable_pointcloud"       default="true"/>
+        <arg name="enable_confidence"       default="true"/>
+
+        <arg name="align_depth"             default="true"/>
+        <arg name="filters"                 default=""/>       
+
+        <arg name="pointcloud_texture_stream" default="RS2_STREAM_COLOR"/>
+        <arg name="enable_infra"        default="false"/>
+        <arg name="enable_infra1"       default="false"/>
+        <arg name="enable_infra2"       default="false"/> -->
+    </include>
+</launch>

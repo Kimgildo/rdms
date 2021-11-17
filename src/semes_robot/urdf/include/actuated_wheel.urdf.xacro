@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="actuated_wheel" params="locationprefix locationright">
+    <joint name="${locationprefix}_wheel_joint" type="fixed">
+      <origin xyz="0.0 ${-mobile_robot_act_wheel_dy * locationright} ${mobile_robot_act_wheel_radius}" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="${locationprefix}_wheel_link" />
+      <axis xyz="0 1 0" />
+      <limit effort="100" velocity="20.0" />
+    </joint>
+
+    <link name="${locationprefix}_wheel_link">
+      <xacro:cylinder_inertial mass="${mobile_robot_act_wheel_mass}" radius="${mobile_robot_act_wheel_radius}" length="${mobile_robot_act_wheel_width}">
+        <origin xyz="0 0 0" rpy="${0.5 * pi} 0 0" />
+      </xacro:cylinder_inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://mir_description/meshes/visual/wheel.stl" />
+        </geometry>
+        <xacro:insert_block name="material_dark_grey" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://mir_description/meshes/visual/wheel.stl" />
+        </geometry>
+      </collision>
+    </link>
+    <gazebo reference="${locationprefix}_wheel_link">
+      <material>Gazebo/DarkGrey</material>
+    </gazebo>
+  </xacro:macro>
+</robot>

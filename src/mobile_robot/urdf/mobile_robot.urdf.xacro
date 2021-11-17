@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="mobile_robot" >
+
+  <!-- mobile_robot base -->
+  <xacro:include filename="$(find mobile_robot)/urdf/include/mobile_robot_v1.urdf.xacro"/>
+  <xacro:include filename="$(find mobile_robot)/urdf/include/common.gazebo.xacro" />
+
+  <xacro:mobile_robot/>
+  
+</robot>

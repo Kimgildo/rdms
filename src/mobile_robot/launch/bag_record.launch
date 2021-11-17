@@ -1,0 +1,9 @@
+<launch>
+    <arg name="rosbag_filename" default="unnamed"/>
+
+    <node name="rosbag_record" pkg="rosbag" type="record" 
+          args="-a -O $(find mobile_robot)/assets/bag/$(arg rosbag_filename)"
+          output="screen">
+    </node>
+
+</launch>

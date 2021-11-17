@@ -1,0 +1,38 @@
+<launch>
+    <!-- setup robot description -->
+    
+    <!-- setup motor_driver -->
+    <node pkg="roboteq_diff_driver" type="driver" name="roboteq_diff_driver" output="screen">
+        <!-- enable broadcast of odom tf -->
+        <param name="pub_odom_tf" value="false" />
+        <!-- specify odom frame -->
+        <param name="odom_frame" value="odom" />
+        <!-- specify base frame -->
+        <param name="base_frame" value="base_footprint" />
+        <!-- specify cmd_vel topic -->
+        <param name="cmdvel_topic" value="cmd_vel" />
+        <!-- specify port for roboteq controller -->
+        <param name="port" value="/dev/ttyS4" />
+        <!-- specify baud for roboteq controller -->
+        <param name="baud" value="115200" />
+        <!-- specify whether to use open-loop motor speed control (as opposed to closed-loop)-->
+        <param name="open-loop" value="false" />
+        <!-- specify robot wheel circumference in meters  -->
+        <param name="wheel_circumference" value="0.3927" /> <!-- diameter : 0.135m  --> <!-- 0.3927 -->
+        <!-- specify robot track width in meters  -->
+        <param name="track_width" value="0.4840" />  <!--0.4750    4840 -->
+        <!-- specify counts-per-revolution for motor encoders (ppr*4 for quadrature encoders)  -->
+        <param name="encoder_ppr" value="2560" />
+        <param name="encoder_cpr" value="10240" />
+        <!-- specify maximum motor current (amps) -->
+        <param name="max_amps" value="5.0" />
+        <!-- specify maximum motor speed (rpm) -->
+        <param name="max_rpm" value="100" /> <!-- 99240 -->
+        <!-- set max acceleration/deceleration rate (rpm/s * 10) -->
+        <param name="max_acc" value="18197" />
+        <param name="max_dcc" value="38197" />
+        <!-- secifiy gear ratio -->
+        <param name="gear_ratio" value="25" /> <!-- 25 -->
+    </node>
+    <include file="$(find teleop_twist_joy)/launch/teleop.launch"></include>
+</launch>

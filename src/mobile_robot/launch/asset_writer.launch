@@ -1,0 +1,12 @@
+<launch>
+  <arg name="config_file" default="assets_writer.lua"/>
+  <node name="assets_writer" pkg="cartographer_ros" required="true"
+      type="cartographer_assets_writer" args="
+          -configuration_directory $(find mobile_robot)/configuration_files
+          -configuration_basename $(arg config_file)
+          -urdf_filename $(find mobile_robot)/urdf/mobile_robot.urdf
+          -bag_filenames $(find mobile_robot)/assets/bag/2020-12-23-11-10-09.bag
+          -pose_graph_filename $(find mobile_robot)/assets/state/test.bag.pbstream"
+      output="screen">
+  </node>
+</launch>

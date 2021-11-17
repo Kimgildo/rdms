@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find mobile_robot)/urdf/include/common_properties.urdf.xacro" />
+
+  <xacro:property name="laser_x" value="0.156" />
+  <xacro:property name="laser_y" value="0.155" />
+  <xacro:property name="laser_z" value="0.185" />
+  <xacro:property name="laser_mass" value="0.5" />
+
+  <xacro:macro name="d435_3d_camera" params="link topic prepend_prefix_to_laser_frame='false'">
+    <link name="${link}">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="${pi/2} 0 ${pi/2}" />
+        <geometry>
+          <mesh scale="0.03 0.03 0.03" filename="package://mobile_robot/meshes/visual/Intel_RealSense_D435.stl" />
+        </geometry>
+        <xacro:insert_block name="material_grey" />
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://mobile_robot/meshes/visual/Intel_RealSense_D435.stl" />
+        </geometry>
+      </collision>
+      <xacro:box_inertial x="${laser_x}" y="${laser_y}" z="${laser_z}" mass="${laser_mass}">
+        <origin xyz="0 0 0" />
+      </xacro:box_inertial>
+    </link>
+
+  </xacro:macro>
+</robot>

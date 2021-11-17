@@ -1,0 +1,31 @@
+<launch>
+    <!-- Rviz -->
+    <arg name="no_rviz" default="false"/>
+    <!-- Mapping -->
+    <arg name="cartographer_config_filename" default="cartographer_mapping_config.lua"/>
+    <arg name="sec_config_filename" default="sec_config_for_mapping.lua"/>
+    <arg name="start_trajectory_with_sec_options" default="true"/> <!-- Always true -->
+
+    <group unless="$(arg no_rviz)">
+        <node name="rviz" pkg="rviz" type="rviz" required="true"
+            args="-d $(find mobile_robot)/rviz/rviz_config.rviz" />
+    </group>
+
+    <node name="cartographer_occupancy_grid_node"
+            pkg="cartographer_ros" 
+            type="cartographer_occupancy_grid_node"
+            args="-resolution 0.05"/>
+
+    <node name="cartographer_node" pkg="cartographer_ros"
+            type="cartographer_node"
+            args="-configuration_directory $(find mobile_robot)/configuration_files
+                  -configuration_basename $(arg cartographer_config_filename)
+                  -sec_configuration_basename $(arg sec_config_filename)
+                  -start_trajectory_with_sec_options=$(arg start_trajectory_with_sec_options)
+                  "
+            output="screen">
+        <remap from="scan_1" to="f_scan_rep117"/>
+        <remap from="scan_2" to="b_scan_rep117"/>
+        <remap from="imu" to="imu/data" />
+    </node>
+</launch>

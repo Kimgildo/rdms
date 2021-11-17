@@ -1,0 +1,57 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="model" default="burger" />
+  <arg name="cmd_vel_topic" default="/cmd_vel"/>
+  <arg name="odom_topic" default="robot_pose_ekf/odom_combined" />
+  <arg name="move_forward_only" default="true"/>
+  <arg name="prefix" default="" doc="Prefix used for robot tf frames" /> <!-- used in the config files -->
+  <arg name="local_planner" default="dwa" doc="Local planner can be either dwa, base, teb or pose"/>
+
+  <!-- move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+    
+    <!-- <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find turtlebot3_navigation)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot3_navigation)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot3_navigation)/param/move_base_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot3_navigation)/param/dwa_local_planner_params_$(arg model).yaml" command="load" /> -->
+
+
+    <rosparam file="$(find mir_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" subst_value="true" />
+    <rosparam file="$(find mir_navigation)/config/costmap_global_params.yaml" command="load" />
+    <rosparam file="$(find mir_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" subst_value="true" />
+    <rosparam file="$(find mir_navigation)/config/costmap_local_params.yaml" command="load" subst_value="true" />
+    <rosparam file="$(find mir_navigation)/config/move_base_common_params.yaml" command="load" />
+    <!-- <rosparam file="$(find mir_navigation)/config/sbpl_global_params.yaml" command="load" /> -->
+    <rosparam file="$(find mir_navigation)/config/$(arg local_planner)_local_planner_params.yaml" command="load" />
+    
+    
+
+
+    <!-- <param name="SBPLLatticePlanner/primitive_filename" value="$(find mir_navigation)/mprim/unicycle_highcost_5cm.mprim" />
+    <rosparam file="$(find mir_navigation)/config/move_base_common_params.yaml" command="load" />
+    <rosparam file="$(find mir_navigation)/config/sbpl_global_params.yaml" command="load" />
+    <rosparam file="$(find mir_navigation)/config/$(arg local_planner)_local_planner_params.yaml" command="load" />
+
+    <rosparam file="$(find mir_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" subst_value="true" />
+    <rosparam file="$(find mir_navigation)/config/costmap_global_params.yaml" command="load" />
+    <rosparam file="$(find mir_navigation)/config/costmap_global_params_plugins_virtual_walls.yaml" command="load" if="$(arg with_virtual_walls)" />
+    <rosparam file="$(find mir_navigation)/config/costmap_global_params_plugins_no_virtual_walls.yaml" command="load" unless="$(arg with_virtual_walls)" />
+
+    <rosparam file="$(find mir_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" subst_value="true" />
+    <rosparam file="$(find mir_navigation)/config/costmap_local_params.yaml" command="load" subst_value="true" />
+    <rosparam file="$(find mir_navigation)/config/costmap_local_params_plugins_virtual_walls.yaml" command="load" if="$(arg with_virtual_walls)" />
+    <rosparam file="$(find mir_navigation)/config/costmap_local_params_plugins_no_virtual_walls.yaml" command="load" unless="$(arg with_virtual_walls)" />
+    <remap from="map" to="/map" />
+    <remap from="odom" to="odom_comb" />
+    <remap from="marker" to="move_base_node/DWBLocalPlanner/markers" /> -->
+
+
+        
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+    <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
+  </node>
+</launch>
